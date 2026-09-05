@@ -1,16 +1,36 @@
 'use client';
 
-import {useState } from "react";
+import { useEffect, useState } from "react";
+
+const squareWidth = 50;
 
 export default function Portfolio() {
-    const squares = Array.from({ length: 900 });
     const [state, setState] = useState(0);
+    const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
 
-    console.log("Rendering");
+    useEffect(() => {
+        const updateGridSize = () => {
+            setGridCount({
+                columns: Math.ceil(window.innerWidth / squareWidth),
+                rows: Math.ceil(window.innerHeight / squareWidth),
+            });
+        };
+
+        updateGridSize();
+        window.addEventListener("resize", updateGridSize);
+
+        return () => window.removeEventListener("resize", updateGridSize);
+    }, []);
+
+    const squares = Array.from({ length: gridCount.columns * gridCount.rows });
+
+    console.debug("Rendering");
 
     return (
         <main className="min-h-screen bg-black">
-            <div className="grid grid-cols-50">
+            <div className="grid" style={{
+                gridTemplateColumns: `repeat(${gridCount.columns}, minmax(0, 1fr))`,
+            }}>
                 {squares.map((_, index) => (
                     <div
                         key={index}
