@@ -24,3 +24,24 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.gridCell {
+  background-color: #262626;
+  animation: grid-cell-pulse 30s ease-in-out infinite alternate;
+}
+
+@keyframes grid-cell-pulse {
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% {
+    background-color: #262626;
+  }
+
+  100% {
+    background-color: #ffffff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gridCell {
+    animation: none;
+  }
+}
