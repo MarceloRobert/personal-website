@@ -1,6 +1,13 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import "./portfolio.css";
+// the css is specific to this page, so we can make a specific css file for it.
+// It could be imported as a module (as in portfolio.module.css), which helps with scoping,
+// but then we would have to use it as `import styles from "./portfolio.module.css"`,
+// and use it like `styles.gridCell` instead of just `gridCell`, which is less convenient.
+// But exactly because this is a specific css file, there's not much worry about scoping.
+// So the easier use wins.
 
 const squareWidth = 35;
 
