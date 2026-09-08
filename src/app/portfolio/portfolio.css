@@ -1,0 +1,31 @@
+:root {
+  --gridBackground: #ffffff;
+  --gridForeground: #000c25;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --gridBackground: #262626;
+    --gridForeground: #ffffff;
+  }
+}
+
+.gridCell {
+  animation: grid-cell-pulse 30s ease-in-out infinite alternate;
+}
+
+@keyframes grid-cell-pulse {
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% {
+    background-color: var(--gridBackground);
+  }
+
+  100% {
+    background-color: var(--gridForeground);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gridCell {
+    animation: none;
+  }
+}
