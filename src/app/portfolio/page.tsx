@@ -13,6 +13,7 @@ const SQUARE_WIDTH = 35;
 const LTD_RANDOM_NUMS_LEN = 1000;
 const UINT16_LIMIT = 65536;
 const ANIMATION_OFFSET = 300; // in seconds, should be more than the animation duration in the css
+const SHOW_DEV_TAG = process.env.NEXT_PUBLIC_SHOW_DEV_TAG === "true";
 
 export default function Portfolio() {
     const [state, setState] = useState(0);
@@ -71,12 +72,14 @@ export default function Portfolio() {
                     <h1 className="text-2xl">Marcelo Robert Santos</h1>
                 </div>
 
-                <div>{state}</div>
-                <button
-                    onClick={() => setState((prev) => prev + 1)}
-                >
-                    Change state
-                </button>
+                {SHOW_DEV_TAG && <div>
+                    <span>{state} </span>
+                    <button
+                        onClick={() => setState((prev) => prev + 1)}
+                    >
+                        Change state
+                    </button>
+                </div>}
                 <button
                     onClick={() => setGridEnabled((prev) => !prev)}
                 >
