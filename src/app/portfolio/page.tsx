@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./portfolio.css";
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
@@ -9,18 +9,25 @@ import "./portfolio.css";
 // But exactly because this is a specific css file, there's not much worry about scoping.
 // So the easier use wins.
 
-const squareWidth = 35;
+const SQUARE_WIDTH = 35;
+const LTD_RANDOM_NUMS_LEN = 1000;
+const UINT16_LIMIT = 65536;
+const ANIMATION_OFFSET = 300; // in seconds, should be more than the animation duration in the css
 
 export default function Portfolio() {
     const [state, setState] = useState(0);
     const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
     const [gridEnabled, setGridEnabled] = useState(true);
+    // Array of random values that will be generated once and never changed again so to maintain purity
+    const [limitedRandomNums] = useState(() =>
+        Uint16Array.from({ length: LTD_RANDOM_NUMS_LEN }, () => Math.floor(Math.random() * UINT16_LIMIT))
+    );
 
     useEffect(() => {
         const updateGridSize = () => {
             setGridCount({
-                columns: Math.ceil(window.innerWidth / squareWidth),
-                rows: Math.ceil(window.innerHeight / squareWidth),
+                columns: Math.ceil(window.innerWidth / SQUARE_WIDTH),
+                rows: Math.ceil(window.innerHeight / SQUARE_WIDTH),
             });
         };
 
@@ -34,7 +41,19 @@ export default function Portfolio() {
         // and the cleanup will run on unmount
     }, []);
 
-    const squares = Array.from({ length: gridCount.columns * gridCount.rows });
+    const gridSquares = useMemo(() => {
+        const squares = Array.from({ length: gridCount.columns * gridCount.rows });
+        return squares.map((_, index) => (
+            <div
+                key={index}
+                className="gridCell aspect-square"
+                style={{
+                    animationDelay: `${-(limitedRandomNums[index % LTD_RANDOM_NUMS_LEN] / UINT16_LIMIT) * ANIMATION_OFFSET}s`,
+                }}
+            />
+        ))
+    }, [gridCount, limitedRandomNums]);
+
 
     console.debug("Rendering");
 
@@ -44,15 +63,7 @@ export default function Portfolio() {
                 <div id="gridContainer" className="grid overflow-hidden" style={{
                     gridTemplateColumns: `repeat(${gridCount.columns}, minmax(0, 1fr))`,
                 }}>
-                    {squares.map((_, index) => (
-                        <div
-                            key={index}
-                            className="gridCell aspect-square"
-                            style={{
-                                animationDelay: `${-Math.random() * 300}s`,
-                            }}
-                        />
-                    ))}
+                    {gridSquares}
                 </div>
             </section>}
             <main className="relative font-mono">
