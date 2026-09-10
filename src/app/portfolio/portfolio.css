@@ -1,11 +1,12 @@
 :root {
   --gridBackground: #ffffff;
   --gridForeground: #000c25;
+  --baseGray: #262626
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --gridBackground: #262626;
+    --gridBackground: var(--baseGray);
     --gridForeground: #ffffff;
   }
 }
@@ -28,4 +29,12 @@
   .gridCell {
     animation: none;
   }
+}
+
+/* There's not really a way to make real liquid glass with CSS since it requires distortions.
+  However, it would be possible to make them with webGL and js libraries. */
+.glass {
+  box-shadow: 0px 0px 2px var(--baseGray) inset,
+              2px 1px 2px white inset,
+              -2px -0px 2px white inset;
 }
