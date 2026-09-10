@@ -67,9 +67,9 @@ export default function Portfolio() {
                     {gridSquares}
                 </div>
             </section>}
-            <main className="relative font-mono">
-                <div className="bg-green-500/50 p-4 rounded-2xl">
-                    <h1 className="text-2xl">Marcelo Robert Santos</h1>
+            <main className="relative font-mono text-center max-w-7/10 self-center pt-16">
+                <div className="backdrop-contrast-75 hover:backdrop-contrast-50 transition-all backdrop-blur-md py-4 px-6 rounded-full glass">
+                    <h1 className="text-4xl">Marcelo Robert Santos</h1>
                 </div>
 
                 {SHOW_DEV_TAG && <div>
