@@ -1,7 +1,10 @@
 'use client';
 
-import { useEffect, useMemo, useState } from "react";
 import "./portfolio.css";
+import { useEffect, useMemo, useState } from "react";
+import { GlassContainer } from "@/components/GlassContainer";
+import { IconLink } from "@/components/IconLink";
+
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
 // but then we would have to use it as `import styles from "./portfolio.module.css"`,
@@ -61,15 +64,29 @@ export default function Portfolio() {
     return (
         <>
             {gridEnabled && <section id="background" className="fixed h-screen w-screen">
-                <div id="gridContainer" className="grid overflow-hidden" style={{
+                <div id="gridContainer" className="grid overflow-hidden gap-px" style={{
                     gridTemplateColumns: `repeat(${gridCount.columns}, minmax(0, 1fr))`,
                 }}>
                     {gridSquares}
                 </div>
             </section>}
-            <main className="relative font-mono text-center max-w-7/10 self-center pt-16">
-                <div className="backdrop-contrast-75 hover:backdrop-contrast-50 transition-all backdrop-blur-md py-4 px-6 rounded-full glass">
-                    <h1 className="text-4xl">Marcelo Robert Santos</h1>
+            <main className="min-h-screen px-16 bg-base-gray/90 relative font-mono text-center max-w-7/10 self-center pt-16" style={{boxShadow: "0px 0px 20px var(--color-base-gray)" }}>
+                <GlassContainer>
+                    <h1 className="text-6xl">Marcelo Robert Santos</h1>
+                </GlassContainer>
+                <div id="links" className="flex justify-center gap-8 pt-4 pb-8">
+                    <IconLink
+                        text="GitHub"
+                        href="https://github.com/MarceloRobert"
+                        iconSrc="/icons/GitHub_Invertocat_Black.svg"
+                        iconAlt="GitHub logo"
+                    />
+                    <IconLink
+                        text="LinkedIn"
+                        href="https://www.linkedin.com/in/marcelorobert/"
+                        iconSrc="/icons/InBug-Black.png"
+                        iconAlt="LinkedIn logo"
+                    />
                 </div>
 
                 {SHOW_DEV_TAG && <div>
