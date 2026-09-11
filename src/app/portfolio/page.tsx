@@ -70,7 +70,7 @@ export default function Portfolio() {
                     {gridSquares}
                 </div>
             </section>}
-            <main className="min-h-screen px-16 bg-base-gray/90 relative font-mono text-center max-w-7/10 self-center pt-16" style={{boxShadow: "0px 0px 20px var(--color-base-gray)" }}>
+            <main className="min-h-screen flex flex-col px-16 bg-base-gray/90 relative font-mono text-center sm:max-w-9/10 lg:max-w-7/10 self-center pt-16" style={{boxShadow: "0px 0px 20px var(--color-base-gray)" }}>
                 <GlassContainer>
                     <h1 className="text-6xl">Marcelo Robert Santos</h1>
                 </GlassContainer>
@@ -97,6 +97,11 @@ export default function Portfolio() {
                         Change state
                     </button>
                 </div>}
+
+                <div id="summary" className="lg:max-w-2xl sm:max-w-full self-center">
+                    <p>Hi! I&apos;m a Full-Stack developer with experience in frontend, backend, and database. Check out the projects I have worked on!</p>
+                </div>
+
                 <button
                     onClick={() => setGridEnabled((prev) => !prev)}
                 >
