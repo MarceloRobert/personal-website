@@ -29,3 +29,12 @@
     animation: none;
   }
 }
+
+.portfolioParagraph {
+  text-align: justify;
+  text-indent: 32px;
+}
+
+.technologiesUsed {
+  margin-top: 16px;
+}
