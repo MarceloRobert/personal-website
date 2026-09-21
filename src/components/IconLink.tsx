@@ -27,7 +27,7 @@ export const IconLink = ({
             width={iconWidth}
             height={iconHeight}
             priority />
-        <Link href={href} target="_blank" className="text-lg">
+        <Link href={href} target="_blank" className="text-lg" rel="noopener noreferrer">
             {text}
         </Link>
     </div>;
