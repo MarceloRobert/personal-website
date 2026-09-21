@@ -94,7 +94,7 @@ export default function Portfolio() {
                         />
                         <IconLink
                             text="LinkedIn"
-                            href="https://www.linkedin.com/in/marcelorobert/"
+                            href="https://www.linkedin.com/in/marcelorobert/?locale=en-US"
                             iconSrc="/icons/InBug-Black.png"
                             iconAlt="LinkedIn logo"
                         />
