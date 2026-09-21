@@ -15,7 +15,16 @@
 }
 
 @keyframes grid-cell-pulse {
-  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90% {
+  0%,
+  10%,
+  20%,
+  30%,
+  40%,
+  50%,
+  60%,
+  70%,
+  80%,
+  90% {
     background-color: var(--gridBackground);
   }
 
@@ -33,6 +42,29 @@
 .portfolioParagraph {
   text-align: justify;
   text-indent: 32px;
+}
+
+.portfolioHeading {
+  text-align: left;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 600;
+  text-decoration-line: underline;
+  margin-top: 4rem;
+}
+
+.portfolioSubheading {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.portfolioList {
+  list-style-type: disc;
+  text-indent: 0;
+  margin-left: 3rem;
 }
 
 .technologiesUsed {
