@@ -10,7 +10,7 @@ export const GlassContainer = ({
    className?: string;
 }) => {
    return <div
-      className={twMerge("backdrop-contrast-75 w-fit self-center hover:backdrop-contrast-50 transition-all backdrop-blur-md py-4 px-6 rounded-[50px] lg:rounded-full", className)}
+      className={twMerge("backdrop-contrast-75 hover:backdrop-contrast-50 backdrop-blur-md transition-all py-4 px-6 rounded-[50px] lg:rounded-full", className)}
       style={{
          boxShadow: "0px 0px 2px var(--color-base-gray) inset, 2px 1px 2px white inset, -2px 0px 2px white inset",
       }}
