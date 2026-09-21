@@ -151,7 +151,7 @@ export default function Portfolio() {
                                 <li>Semantic HTML.</li>
                             </ul>
                             <p className="technologiesUsed">Technologies used: Next.js, TypeScript, Tailwind CSS</p>
-                            <ProjectLink text="You can find this website's repository at" href="https://github.com/MarceloRobert/landing-pages" />
+                            <ProjectLink text="You can find this website's repository at" href="https://github.com/MarceloRobert/personal-website" />
                         </div>
                     </article>
                     <hr className="w-1/2 mx-auto my-8" />
