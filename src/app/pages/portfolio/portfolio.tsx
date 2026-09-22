@@ -65,14 +65,13 @@ export default function Portfolio() {
     return (
         <>
             {gridEnabled && <section id="background" className="fixed h-screen w-screen" aria-hidden="true">
-                <div id="gridContainer" className="grid overflow-hidden gap-px" style={{
+                <div id="gridContainer" className="grid overflow-hidden gap-px h-full w-full" style={{
                     gridTemplateColumns: `repeat(${gridCount.columns}, minmax(0, 1fr))`,
                 }}>
                     {gridSquares}
                 </div>
             </section>}
-            <main className="portfolioMain min-h-screen flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-16 pt-16 pb-16">
-
+            <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 py-16">
                 <button
                     id="toggleGridButton"
                     className="fixed top-4 right-4 dark:bg-white dark:text-black bg-black text-white text-lg transition-all py-2 px-4 rounded-full"
