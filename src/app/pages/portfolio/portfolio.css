@@ -47,6 +47,11 @@
 .portfolioParagraph {
   text-align: justify;
   text-indent: 32px;
+  overflow-wrap: anywhere;
+}
+
+.portfolioMain a {
+  overflow-wrap: anywhere;
 }
 
 .portfolioHeading {
