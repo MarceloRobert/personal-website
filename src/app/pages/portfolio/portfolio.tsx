@@ -19,6 +19,7 @@ const LTD_RANDOM_NUMS_LEN = 1000;
 const UINT16_LIMIT = 65536;
 const ANIMATION_OFFSET = 300; // in seconds, should be more than the animation duration in the css
 const SHOW_DEV_TAG = process.env.NEXT_PUBLIC_SHOW_DEV_TAG === "true";
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Portfolio() {
     const [state, setState] = useState(0);
@@ -122,7 +123,7 @@ export default function Portfolio() {
                         <h3 className="portfolioSubheading">ProFusion Mobi / KernelCI Dashboard</h3>
                         <div className="portfolioParagraph">
 
-                            <Image className="bg-white rounded-2xl mx-auto my-4 p-4 w-62.5" src={"/images/portfolio/kernelci-logo-color.svg"} width={250} height={125} alt="KernelCI Logo" />
+                            <Image className="bg-white rounded-2xl mx-auto my-4 p-4 w-62.5" src={`${BASE_PATH}/images/portfolio/kernelci-logo-color.svg`} width={250} height={125} alt="KernelCI Logo" />
 
                             <p>Within <Link href={"https://profusion.mobi/"} target="_blank" rel="noopener noreferrer">ProFusion mobi</Link>, I was able to work in the KernelCI Dashboard project. KernelCI is an opensource project helping Linux Kernel developers to build and test their code, and they need a dashboard to visualize all the results.</p>
                             <p>I worked on the frontend, backend and database, as well as CI/CD, unit and integration tests, email notifications, performance monitoring, and more. I was the development team leader for a while too.</p>
