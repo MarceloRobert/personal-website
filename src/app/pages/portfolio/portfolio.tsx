@@ -71,7 +71,7 @@ export default function Portfolio() {
                     {gridSquares}
                 </div>
             </section>}
-            <main className="min-h-screen flex flex-col px-16 bg-base-gray/90 z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 self-center pt-16 pb-16" style={{ boxShadow: "20px 0px 20px color-mix(in oklab, var(--color-base-gray) 90%, transparent), -20px 0px 20px color-mix(in oklab, var(--color-base-gray) 90%, transparent)" }}>
+            <main className="portfolioMain min-h-screen flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-16 pt-16 pb-16">
 
                 <button
                     id="toggleGridButton"
