@@ -1,5 +1,7 @@
 # My Portfolio
 
+Check it out here: https://marcelorobert.github.io/personal-website/
+
 ## Introduction
 
 This project is a personal portfolio website built with Next.js. It showcases selected projects, skills, and experience through a modern, responsive interface.
@@ -18,7 +20,9 @@ The `public` folder contains **static assets** such as images and fonts.
 
 **CSS files** are placed alongside the page or component they style, following the convention of co-locating styles with their respective components.
 
-## Getting Started
+## Development
+
+### Getting Started
 
 First, run the development server:
 
@@ -34,10 +38,19 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Development controls
+### Environment Variables
 
 You can enable developer testing components using an environment variable in `.env.local`:
 
 ```
 NEXT_PUBLIC_SHOW_DEV_TAG=true
+```
+
+### Testing
+
+This repository uses Playwright for end-to-end testing to make sure the screen renders as expected. To run the tests, use the following command:
+
+```bash
+npm run test:e2e
+# or equivalent commands for yarn, pnpm, or bun. Check package.json for the exact command.
 ```
