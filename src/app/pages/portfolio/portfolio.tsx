@@ -124,14 +124,14 @@ export default function Portfolio() {
 
                             <Image className="bg-white rounded-2xl mx-auto my-4 p-4 w-62.5" src={`${BASE_PATH}/images/portfolio/kernelci-logo-color.svg`} width={250} height={125} alt="KernelCI Logo" />
 
-                            <p>Within <Link href={"https://profusion.mobi/"} target="_blank" rel="noopener noreferrer">ProFusion mobi</Link>, I was able to work in the KernelCI Dashboard project. KernelCI is an opensource project helping Linux Kernel developers to build and test their code, and they need a dashboard to visualize all the results.</p>
-                            <p>I worked on the frontend, backend and database, as well as CI/CD, unit and integration tests, email notifications, performance monitoring, and more. I was the development team leader for a while too.</p>
+                            <p>Within <Link href={"https://profusion.mobi/"} target="_blank" rel="noopener noreferrer">ProFusion mobi</Link>, I worked on the KernelCI Dashboard project. KernelCI is an <strong>opensource</strong> project helping Linux Kernel developers build and test their code, and they need a dashboard to visualize all the results.</p>
+                            <p>I worked on the frontend, backend and database, as well as CI/CD, unit and integration tests, email notifications, and performance monitoring. I was also the development team leader for a while.</p>
                             <p>I contributed to:</p>
                             <ul className="portfolioList">
-                                <li>Creating new pages and <a href="https://github.com/kernelci/dashboard/pulls?q=is%3Apr+state%3Aclosed+author%3AMarceloRobert+Feat+-label%3ABackend%2Cbug%2CCI%2FCD%2Cdependencies%2CIngester" target="_blank" rel="noopener noreferrer">multiple features</a> with React;</li>
-                                <li>Database optimizations with Django and PostgreSQL, improving the performance by <a href="https://github.com/kernelci/dashboard/pull/1562" target="_blank" rel="noopener noreferrer">more than 10x</a>;</li>
-                                <li><a href="https://github.com/kernelci/dashboard/pull/1777" target="_blank" rel="noopener noreferrer">CI/CD and test integrations</a> with GitHub Actions, increasing the <a href="https://github.com/kernelci/dashboard/tree/main/backend#backend-" target="_blank" rel="noopener noreferrer">backend coverage</a> to 70%;</li>
-                                <li>Feature discussions with Scrum and Kanban in two-week sprints.</li>
+                                <li>New pages and <a href="https://github.com/kernelci/dashboard/pulls?q=is%3Apr+state%3Aclosed+author%3AMarceloRobert+Feat+-label%3ABackend%2Cbug%2CCI%2FCD%2Cdependencies%2CIngester" target="_blank" rel="noopener noreferrer">multiple features</a> with React;</li>
+                                <li>Query performance improvements of <a href="https://github.com/kernelci/dashboard/pull/1562" target="_blank" rel="noopener noreferrer">more than 10x</a> on some pages;</li>
+                                <li><a href="https://github.com/kernelci/dashboard/pull/1777" target="_blank" rel="noopener noreferrer">CI/CD/CT</a> with GitHub Actions, increasing <a href="https://github.com/kernelci/dashboard/tree/main/backend#backend-" target="_blank" rel="noopener noreferrer">backend coverage</a> to 70%;</li>
+                                <li>Scrum and Kanban cerimonies and meetings with international clients.</li>
                             </ul>
                             <p className="technologiesUsed">Technologies used: React, TypeScript, Django, Python, PostgreSQL, Docker, Git, GitHub Actions, CI/CD, Scrum, Kanban, Cron jobs, Prometheus, Jinja.</p>
                             <ProjectLink text="You can find KernelCI Dashboard's repository at" href="https://github.com/kernelci/dashboard" />
@@ -143,14 +143,14 @@ export default function Portfolio() {
                     <article>
                         <h3 className="portfolioSubheading">This very website</h3>
                         <div className="portfolioParagraph">
-                            <p>I&apos;ve made everything in this website myself, from design to implementation and deployment. This is a personal portfolio website built with Next.js. It showcases my projects, experience, and skills as a developer.</p>
+                            <p>I&apos;ve made everything in this website myself and with some help from AI agents, from design to implementation and deployment. This is a personal portfolio website built with Next.js. It showcases my projects, experience, and skills as a developer.</p>
                             <p>Some cool features include: </p>
                             <ul className="portfolioList">
                                 <li>Dynamic background with gradient effects;</li>
                                 <li>Responsive design;</li>
                                 <li>Semantic HTML.</li>
                             </ul>
-                            <p className="technologiesUsed">Technologies used: Next.js, TypeScript, Tailwind CSS</p>
+                            <p className="technologiesUsed">Technologies used: Next.js, TypeScript, Tailwind CSS, AI agents.</p>
                             <ProjectLink text="You can find this website's repository at" href="https://github.com/MarceloRobert/personal-website" />
                         </div>
                     </article>
@@ -160,7 +160,7 @@ export default function Portfolio() {
                         <div className="portfolioParagraph">
                             <p>In university, I learned about distributed systems and one of the topics was multiple microcontrollers installed in an hidroponic garden for environment control. I made the frontend in Dart, connecting to a backend in Java, that received data from a microcontroller in C++.</p>
                             <p>The frontend was made with Flutter and we used an ActiveMQ AWS broker as the medium between all components.</p>
-                            <p className="technologiesUsed">Technologies used: Flutter, Dart, ActiveMQ, AWS</p>
+                            <p className="technologiesUsed">Technologies used: Flutter, Dart, ActiveMQ, AWS.</p>
                             <ProjectLink text="You can find the frontend's repository at" href="https://github.com/MarceloRobert/hidroponic_app" />
                         </div>
                     </article>
@@ -170,7 +170,7 @@ export default function Portfolio() {
                         <div className="portfolioParagraph">
                             <p>With a colleague, I made the frontend of a web platform having CRUD (Create, Read, Update, Delete) functionality of projects and users. This would allow users to create and share their own portfolios.</p>
                             <p>The frontend was made with Next.js and it connected to a Java backend.</p>
-                            <p className="technologiesUsed">Technologies used: Next.js, TypeScript, Tailwind CSS, REST APIs</p>
+                            <p className="technologiesUsed">Technologies used: Next.js, TypeScript, Tailwind CSS, REST APIs.</p>
                             <ProjectLink text="You can find the repository at" href="https://github.com/MarceloRobert/web-portfolio" />
                         </div>
                     </article>
