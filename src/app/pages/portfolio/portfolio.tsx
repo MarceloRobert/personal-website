@@ -3,7 +3,7 @@
 import "./portfolio.css";
 import { useEffect, useMemo, useState } from "react";
 import { GlassContainer } from "@/components/GlassContainer";
-import { IconLink } from "@/components/IconLink";
+import { LinkWithIcon } from "@/components/LinkWithIcon";
 import { SocialLinksPill } from "@/components/SocialLinksPill";
 import Image from "next/image";
 import Link from "next/link";
@@ -88,13 +88,13 @@ export default function Portfolio() {
                         <h1 className="text-5xl">Marcelo Robert Santos</h1>
                     </GlassContainer>
                     <nav id="links" className="flex justify-center gap-8 pt-4 pb-8" aria-label="Professional profiles">
-                        <IconLink
+                        <LinkWithIcon
                             text="GitHub"
                             href="https://github.com/MarceloRobert"
                             iconSrc="/icons/GitHub_Invertocat_Black.svg"
                             iconAlt="GitHub logo"
                         />
-                        <IconLink
+                        <LinkWithIcon
                             text="LinkedIn"
                             href="https://www.linkedin.com/in/marcelorobert/?locale=en-US"
                             iconSrc="/icons/InBug-Black.png"
