@@ -28,4 +28,21 @@ test.describe("mobile responsive layout", () => {
     expect(box).not.toBeNull();
     expect(box).toMatchObject({ x: 0, y: 0, width: 375, height: 800 });
   });
+
+  test("shows the social links pill after scrolling past the link bar", async ({
+    page,
+  }) => {
+    // Has to be desktop viewport because on mobile the links are hidden
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+
+    const socialLinksPill = page.locator("#sideLinks > div");
+    await expect(socialLinksPill).toBeHidden();
+
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+    await expect(socialLinksPill).toBeInViewport();
+
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await expect(socialLinksPill).toBeHidden();
+  });
 });

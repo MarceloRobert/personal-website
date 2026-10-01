@@ -18,6 +18,8 @@
 # next.js
 /.next/
 /out/
+# Additional folder for playwright tests to avoid conflicts with the main .next folder
+.next-playwright
 
 # production
 /build
