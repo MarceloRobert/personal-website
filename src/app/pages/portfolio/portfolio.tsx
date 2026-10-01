@@ -4,6 +4,7 @@ import "./portfolio.css";
 import { useEffect, useMemo, useState } from "react";
 import { GlassContainer } from "@/components/GlassContainer";
 import { IconLink } from "@/components/IconLink";
+import { SocialLinksPill } from "@/components/SocialLinksPill";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -71,6 +72,7 @@ export default function Portfolio() {
                     {gridSquares}
                 </div>
             </section>}
+            <SocialLinksPill />
             <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 py-16">
                 <button
                     id="toggleGridButton"
