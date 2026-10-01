@@ -1,26 +1,19 @@
+import { IconType } from "@/types/IconType";
 import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-export const LinkWithIcon = ({
-    text,
+export function LinkWithIcon ({
+    label,
     href,
     iconSrc,
     iconAlt,
     iconWidth = 32,
     iconHeight = 32,
     iconClassName,
-}: {
-    text: string;
-    href: string;
-    iconSrc: string;
-    iconAlt: string;
-    iconWidth?: number;
-    iconHeight?: number;
-    iconClassName?: string;
-}) => {
+}: IconType): React.ReactNode {
     return (
         <div className="flex items-center justify-center gap-2">
             <Image
@@ -29,6 +22,8 @@ export const LinkWithIcon = ({
                 alt={iconAlt}
                 width={iconWidth}
                 height={iconHeight}
+                aria-label={label}
+                title={label}
                 priority
             />
             <Link
@@ -37,7 +32,7 @@ export const LinkWithIcon = ({
                 className="text-lg"
                 rel="noopener noreferrer"
             >
-                {text}
+                {label}
             </Link>
         </div>
     );

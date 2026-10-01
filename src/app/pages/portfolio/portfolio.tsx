@@ -7,6 +7,7 @@ import { LinkWithIcon } from "@/components/LinkWithIcon";
 import { SocialLinksPill } from "@/components/SocialLinksPill";
 import Image from "next/image";
 import Link from "next/link";
+import { ICONS } from "@/constants/icons";
 
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
@@ -88,18 +89,8 @@ export default function Portfolio() {
                         <h1 className="text-5xl">Marcelo Robert Santos</h1>
                     </GlassContainer>
                     <nav id="links" className="flex justify-center gap-8 pt-4 pb-8" aria-label="Professional profiles">
-                        <LinkWithIcon
-                            text="GitHub"
-                            href="https://github.com/MarceloRobert"
-                            iconSrc="/icons/GitHub_Invertocat_Black.svg"
-                            iconAlt="GitHub logo"
-                        />
-                        <LinkWithIcon
-                            text="LinkedIn"
-                            href="https://www.linkedin.com/in/marcelorobert/?locale=en-US"
-                            iconSrc="/icons/InBug-Black.png"
-                            iconAlt="LinkedIn logo"
-                        />
+                        {LinkWithIcon(ICONS.GITHUB)}
+                        {LinkWithIcon(ICONS.LINKEDIN)}
                     </nav>
                 </header>
 
