@@ -1,28 +1,10 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { useEffect, useState } from "react";
 import { GlassContainer } from "./GlassContainer";
-
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-
-// TODO: keep this const in a single place to keep it in sync with main nav links
-const socialLinks = [
-    {
-        href: "https://github.com/MarceloRobert",
-        iconSrc: "/icons/GitHub_Invertocat_Black.svg",
-        iconAlt: "GitHub logo",
-        label: "GitHub",
-    },
-    {
-        href: "https://www.linkedin.com/in/marcelorobert/?locale=en-US",
-        iconSrc: "/icons/InBug-Black.png",
-        iconAlt: "LinkedIn logo",
-        label: "LinkedIn",
-    },
-];
+import { IconWithLink } from "./IconWithLink";
+import { ICONS } from "@/constants/icons";
 
 export function SocialLinksPill() {
     const [isVisible, setIsVisible] = useState(false);
@@ -52,25 +34,8 @@ export function SocialLinksPill() {
                 isVisible && "translate-x-0 visible opacity-100",
             )}
             >
-            {/* TODO: replace with IconLink or LinkIcon */}
-            {socialLinks.map(({ href, iconSrc, iconAlt, label }) => (
-                <Link
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                title={label}
-                >
-                <Image
-                className="block size-8 dark:invert"
-                src={`${BASE_PATH}${iconSrc}`}
-                alt={iconAlt}
-                width={32}
-                height={32}
-                />
-                </Link>
-            ))}
+            {IconWithLink(ICONS.GITHUB)}
+            {IconWithLink(ICONS.LINKEDIN)}
             </GlassContainer>
         </aside>
     );
