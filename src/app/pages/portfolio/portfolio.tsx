@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import "./portfolio.css";
 import { useEffect, useMemo, useState } from "react";
@@ -24,167 +24,309 @@ const SHOW_DEV_TAG = process.env.NEXT_PUBLIC_SHOW_DEV_TAG === "true";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Portfolio() {
-    const [state, setState] = useState(0);
-    const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
-    const [gridEnabled, setGridEnabled] = useState(true);
-    // Array of random values that will be generated once and never changed again so to maintain purity
-    const [limitedRandomNums] = useState(() =>
-        Uint16Array.from({ length: LTD_RANDOM_NUMS_LEN }, () => Math.floor(Math.random() * UINT16_LIMIT))
-    );
+  const [state, setState] = useState(0);
+  const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
+  const [gridEnabled, setGridEnabled] = useState(true);
+  // Array of random values that will be generated once and never changed again so to maintain purity
+  const [limitedRandomNums] = useState(() =>
+    Uint16Array.from({ length: LTD_RANDOM_NUMS_LEN }, () =>
+      Math.floor(Math.random() * UINT16_LIMIT),
+    ),
+  );
 
-    useEffect(() => {
-        const updateGridSize = () => {
-            setGridCount({
-                columns: Math.ceil(window.innerWidth / SQUARE_WIDTH),
-                rows: Math.ceil(window.innerHeight / SQUARE_WIDTH),
-            });
-        };
+  useEffect(() => {
+    const updateGridSize = () => {
+      setGridCount({
+        columns: Math.ceil(window.innerWidth / SQUARE_WIDTH),
+        rows: Math.ceil(window.innerHeight / SQUARE_WIDTH),
+      });
+    };
 
-        updateGridSize();
-        window.addEventListener("resize", updateGridSize);
+    updateGridSize();
+    window.addEventListener("resize", updateGridSize);
 
-        return () => window.removeEventListener("resize", updateGridSize);
-        // returning a function definition means that the useEffect will run it as a CLEANUP function
-        // the cleanup happens whenever the useEffect is re-run, or when the component is unmounted
-        // Since this useEffect has no dependencies, it will only run once on mount,
-        // and the cleanup will run on unmount
-    }, []);
+    return () => window.removeEventListener("resize", updateGridSize);
+    // returning a function definition means that the useEffect will run it as a CLEANUP function
+    // the cleanup happens whenever the useEffect is re-run, or when the component is unmounted
+    // Since this useEffect has no dependencies, it will only run once on mount,
+    // and the cleanup will run on unmount
+  }, []);
 
-    const gridSquares = useMemo(() => {
-        const squares = Array.from({ length: gridCount.columns * gridCount.rows });
-        return squares.map((_, index) => (
-            <div
-                key={index}
-                className="gridCell aspect-square"
-                style={{
-                    animationDelay: `${-(limitedRandomNums[index % LTD_RANDOM_NUMS_LEN] / UINT16_LIMIT) * ANIMATION_OFFSET}s`,
-                }}
-            />
-        ))
-    }, [gridCount, limitedRandomNums]);
+  const gridSquares = useMemo(() => {
+    const squares = Array.from({ length: gridCount.columns * gridCount.rows });
+    return squares.map((_, index) => (
+      <div
+        key={index}
+        className="gridCell aspect-square"
+        style={{
+          animationDelay: `${-(limitedRandomNums[index % LTD_RANDOM_NUMS_LEN] / UINT16_LIMIT) * ANIMATION_OFFSET}s`,
+        }}
+      />
+    ));
+  }, [gridCount, limitedRandomNums]);
 
+  return (
+    <>
+      {gridEnabled && (
+        <section
+          id="background"
+          className="fixed h-screen w-screen"
+          aria-hidden="true"
+        >
+          <div
+            id="gridContainer"
+            className="grid overflow-hidden gap-px h-full w-full"
+            style={{
+              gridTemplateColumns: `repeat(${gridCount.columns}, minmax(0, 1fr))`,
+            }}
+          >
+            {gridSquares}
+          </div>
+        </section>
+      )}
+      <SocialLinksPill />
+      <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 py-16">
+        <button
+          id="toggleGridButton"
+          className="fixed top-4 right-4 dark:bg-white dark:text-black bg-black text-white text-lg transition-all py-2 px-4 rounded-full"
+          aria-pressed={gridEnabled}
+          onClick={() => setGridEnabled((prev) => !prev)}
+        >
+          {gridEnabled ? "Hide grid" : "Show grid"}
+        </button>
 
-    return (
-        <>
-            {gridEnabled && <section id="background" className="fixed h-screen w-screen" aria-hidden="true">
-                <div id="gridContainer" className="grid overflow-hidden gap-px h-full w-full" style={{
-                    gridTemplateColumns: `repeat(${gridCount.columns}, minmax(0, 1fr))`,
-                }}>
-                    {gridSquares}
-                </div>
-            </section>}
-            <SocialLinksPill />
-            <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 py-16">
-                <button
-                    id="toggleGridButton"
-                    className="fixed top-4 right-4 dark:bg-white dark:text-black bg-black text-white text-lg transition-all py-2 px-4 rounded-full"
-                    aria-pressed={gridEnabled}
-                    onClick={() => setGridEnabled((prev) => !prev)}
+        <header className="self-center">
+          <GlassContainer>
+            <h1 className="text-5xl">Marcelo Robert Santos</h1>
+          </GlassContainer>
+          <nav
+            id="links"
+            className="flex justify-center gap-8 pt-4 pb-8"
+            aria-label="Professional profiles"
+          >
+            {LinkWithIcon(ICONS.GITHUB)}
+            {LinkWithIcon(ICONS.LINKEDIN)}
+          </nav>
+        </header>
+
+        {SHOW_DEV_TAG && (
+          <div>
+            <span>{state} </span>
+            <button onClick={() => setState((prev) => prev + 1)}>
+              Change state
+            </button>
+          </div>
+        )}
+
+        <div id="summary" className="text-lg self-center">
+          <p>
+            Hi! I&apos;m a Full-Stack developer with experience in frontend,
+            backend, and database. Check out the projects I have worked on!
+          </p>
+        </div>
+
+        {SHOW_DEV_TAG && (
+          <div className="size-21 lg:bg-red-500 md:bg-amber-500 sm:bg-yellow-300 bg-green-200"></div>
+        )}
+
+        <section id="experience">
+          <h2 className="portfolioHeading">Experience</h2>
+          <article>
+            <h3 className="portfolioSubheading">
+              ProFusion Mobi / KernelCI Dashboard
+            </h3>
+            <div className="portfolioParagraph">
+              <Image
+                className="bg-white rounded-2xl mx-auto my-4 p-4 w-62.5"
+                src={`${BASE_PATH}/images/portfolio/kernelci-logo-color.svg`}
+                width={250}
+                height={125}
+                alt="KernelCI Logo"
+              />
+
+              <p>
+                Within{" "}
+                <Link
+                  href={"https://profusion.mobi/"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                    {gridEnabled ? "Hide grid" : "Show grid"}
-                </button>
-
-                <header className="self-center">
-                    <GlassContainer>
-                        <h1 className="text-5xl">Marcelo Robert Santos</h1>
-                    </GlassContainer>
-                    <nav id="links" className="flex justify-center gap-8 pt-4 pb-8" aria-label="Professional profiles">
-                        {LinkWithIcon(ICONS.GITHUB)}
-                        {LinkWithIcon(ICONS.LINKEDIN)}
-                    </nav>
-                </header>
-
-                {SHOW_DEV_TAG && <div>
-                    <span>{state} </span>
-                    <button
-                        onClick={() => setState((prev) => prev + 1)}
-                    >
-                        Change state
-                    </button>
-                </div>}
-
-                <div id="summary" className="text-lg self-center">
-                    <p>Hi! I&apos;m a Full-Stack developer with experience in frontend, backend, and database. Check out the projects I have worked on!</p>
-                </div>
-
-                {SHOW_DEV_TAG && <div className="size-21 lg:bg-red-500 md:bg-amber-500 sm:bg-yellow-300 bg-green-200"></div>}
-
-                <section id="experience">
-                    <h2 className="portfolioHeading">Experience</h2>
-                    <article>
-                        <h3 className="portfolioSubheading">ProFusion Mobi / KernelCI Dashboard</h3>
-                        <div className="portfolioParagraph">
-
-                            <Image className="bg-white rounded-2xl mx-auto my-4 p-4 w-62.5" src={`${BASE_PATH}/images/portfolio/kernelci-logo-color.svg`} width={250} height={125} alt="KernelCI Logo" />
-
-                            <p>Within <Link href={"https://profusion.mobi/"} target="_blank" rel="noopener noreferrer">ProFusion mobi</Link>, I worked on the KernelCI Dashboard project. KernelCI is an <strong>opensource</strong> project helping Linux Kernel developers build and test their code, and they need a dashboard to visualize all the results.</p>
-                            <p>I worked on the frontend, backend and database, as well as CI/CD, unit and integration tests, email notifications, and performance monitoring. I was also the development team leader for a while.</p>
-                            <p>I contributed to:</p>
-                            <ul className="portfolioList">
-                                <li>New pages and <a href="https://github.com/kernelci/dashboard/pulls?q=is%3Apr+state%3Aclosed+author%3AMarceloRobert+Feat+-label%3ABackend%2Cbug%2CCI%2FCD%2Cdependencies%2CIngester" target="_blank" rel="noopener noreferrer">multiple features</a> with React;</li>
-                                <li>Query performance improvements of <a href="https://github.com/kernelci/dashboard/pull/1562" target="_blank" rel="noopener noreferrer">more than 10x</a> on some pages;</li>
-                                <li><a href="https://github.com/kernelci/dashboard/pull/1777" target="_blank" rel="noopener noreferrer">CI/CD/CT</a> with GitHub Actions, increasing <a href="https://github.com/kernelci/dashboard/tree/main/backend#backend-" target="_blank" rel="noopener noreferrer">backend coverage</a> to 70%;</li>
-                                <li>Scrum and Kanban cerimonies and meetings with international clients.</li>
-                            </ul>
-                            <p className="technologiesUsed">Technologies used: React, TypeScript, Django, Python, PostgreSQL, Docker, Git, GitHub Actions, CI/CD, Scrum, Kanban, Cron jobs, Prometheus, Jinja.</p>
-                            <ProjectLink text="You can find KernelCI Dashboard's repository at" href="https://github.com/kernelci/dashboard" />
-                        </div>
-                    </article>
-                </section>
-                <section id="projects">
-                    <h2 className="portfolioHeading">Projects</h2>
-                    <article>
-                        <h3 className="portfolioSubheading">This very website</h3>
-                        <div className="portfolioParagraph">
-                            <p>I&apos;ve made everything in this website myself and with some help from AI agents, from design to implementation and deployment. This is a personal portfolio website built with Next.js. It showcases my projects, experience, and skills as a developer.</p>
-                            <p>Some cool features include: </p>
-                            <ul className="portfolioList">
-                                <li>Dynamic background with gradient effects;</li>
-                                <li>Responsive design;</li>
-                                <li>Semantic HTML.</li>
-                            </ul>
-                            <p className="technologiesUsed">Technologies used: Next.js, TypeScript, Tailwind CSS, AI agents.</p>
-                            <ProjectLink text="You can find this website's repository at" href="https://github.com/MarceloRobert/personal-website" />
-                        </div>
-                    </article>
-                    <hr className="w-1/2 mx-auto my-8" />
-                    <article>
-                        <h3 className="portfolioSubheading">Hidroponic Garden Monitoring System</h3>
-                        <div className="portfolioParagraph">
-                            <p>In university, I learned about distributed systems and one of the topics was multiple microcontrollers installed in an hidroponic garden for environment control. I made the frontend in Dart, connecting to a backend in Java, that received data from a microcontroller in C++.</p>
-                            <p>The frontend was made with Flutter and we used an ActiveMQ AWS broker as the medium between all components.</p>
-                            <p className="technologiesUsed">Technologies used: Flutter, Dart, ActiveMQ, AWS.</p>
-                            <ProjectLink text="You can find the frontend's repository at" href="https://github.com/MarceloRobert/hidroponic_app" />
-                        </div>
-                    </article>
-                    <hr className="w-1/2 mx-auto my-8" />
-                    <article>
-                        <h3 className="portfolioSubheading">Website to create and share portfolios</h3>
-                        <div className="portfolioParagraph">
-                            <p>With a colleague, I made the frontend of a web platform having CRUD (Create, Read, Update, Delete) functionality of projects and users. This would allow users to create and share their own portfolios.</p>
-                            <p>The frontend was made with Next.js and it connected to a Java backend.</p>
-                            <p className="technologiesUsed">Technologies used: Next.js, TypeScript, Tailwind CSS, REST APIs.</p>
-                            <ProjectLink text="You can find the repository at" href="https://github.com/MarceloRobert/web-portfolio" />
-                        </div>
-                    </article>
-                </section>
-                <section id="education">
-                    <h2 className="portfolioHeading">Education</h2>
-                    <h3 className="portfolioSubheading">Bachelor&apos;s Degree in Computer Science</h3>
-                    <p>By Federal University of Itajubá - UNIFEI.</p>
-                    <p>From 2020 to 2025, in Itajubá, Minas Gerais, Brazil.</p>
-                    <p className="mt-4">Some highlighted subjects: Software Engineering, Object Oriented Programming, Algorithm Analysis and Design, Web Development, and Distributed Systems.</p>
-                </section>
-            </main >
-        </>
-    )
+                  ProFusion mobi
+                </Link>
+                , I worked on the KernelCI Dashboard project. KernelCI is an{" "}
+                <strong>opensource</strong> project helping Linux Kernel
+                developers build and test their code, and they need a dashboard
+                to visualize all the results.
+              </p>
+              <p>
+                I worked on the frontend, backend and database, as well as
+                CI/CD, unit and integration tests, email notifications, and
+                performance monitoring. I was also the development team leader
+                for a while.
+              </p>
+              <p>I contributed to:</p>
+              <ul className="portfolioList">
+                <li>
+                  New pages and{" "}
+                  <a
+                    href="https://github.com/kernelci/dashboard/pulls?q=is%3Apr+state%3Aclosed+author%3AMarceloRobert+Feat+-label%3ABackend%2Cbug%2CCI%2FCD%2Cdependencies%2CIngester"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    multiple features
+                  </a>{" "}
+                  with React;
+                </li>
+                <li>
+                  Query performance improvements of{" "}
+                  <a
+                    href="https://github.com/kernelci/dashboard/pull/1562"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    more than 10x
+                  </a>{" "}
+                  on some pages;
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/kernelci/dashboard/pull/1777"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    CI/CD/CT
+                  </a>{" "}
+                  with GitHub Actions, increasing{" "}
+                  <a
+                    href="https://github.com/kernelci/dashboard/tree/main/backend#backend-"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    backend coverage
+                  </a>{" "}
+                  to 70%;
+                </li>
+                <li>
+                  Scrum and Kanban cerimonies and meetings with international
+                  clients.
+                </li>
+              </ul>
+              <p className="technologiesUsed">
+                Technologies used: React, TypeScript, Django, Python,
+                PostgreSQL, Docker, Git, GitHub Actions, CI/CD, Scrum, Kanban,
+                Cron jobs, Prometheus, Jinja.
+              </p>
+              <ProjectLink
+                text="You can find KernelCI Dashboard's repository at"
+                href="https://github.com/kernelci/dashboard"
+              />
+            </div>
+          </article>
+        </section>
+        <section id="projects">
+          <h2 className="portfolioHeading">Projects</h2>
+          <article>
+            <h3 className="portfolioSubheading">This very website</h3>
+            <div className="portfolioParagraph">
+              <p>
+                I&apos;ve made everything in this website myself and with some
+                help from AI agents, from design to implementation and
+                deployment. This is a personal portfolio website built with
+                Next.js. It showcases my projects, experience, and skills as a
+                developer.
+              </p>
+              <p>Some cool features include: </p>
+              <ul className="portfolioList">
+                <li>Dynamic background with gradient effects;</li>
+                <li>Responsive design;</li>
+                <li>Semantic HTML.</li>
+              </ul>
+              <p className="technologiesUsed">
+                Technologies used: Next.js, TypeScript, Tailwind CSS, AI agents.
+              </p>
+              <ProjectLink
+                text="You can find this website's repository at"
+                href="https://github.com/MarceloRobert/personal-website"
+              />
+            </div>
+          </article>
+          <hr className="w-1/2 mx-auto my-8" />
+          <article>
+            <h3 className="portfolioSubheading">
+              Hidroponic Garden Monitoring System
+            </h3>
+            <div className="portfolioParagraph">
+              <p>
+                In university, I learned about distributed systems and one of
+                the topics was multiple microcontrollers installed in an
+                hidroponic garden for environment control. I made the frontend
+                in Dart, connecting to a backend in Java, that received data
+                from a microcontroller in C++.
+              </p>
+              <p>
+                The frontend was made with Flutter and we used an ActiveMQ AWS
+                broker as the medium between all components.
+              </p>
+              <p className="technologiesUsed">
+                Technologies used: Flutter, Dart, ActiveMQ, AWS.
+              </p>
+              <ProjectLink
+                text="You can find the frontend's repository at"
+                href="https://github.com/MarceloRobert/hidroponic_app"
+              />
+            </div>
+          </article>
+          <hr className="w-1/2 mx-auto my-8" />
+          <article>
+            <h3 className="portfolioSubheading">
+              Website to create and share portfolios
+            </h3>
+            <div className="portfolioParagraph">
+              <p>
+                With a colleague, I made the frontend of a web platform having
+                CRUD (Create, Read, Update, Delete) functionality of projects
+                and users. This would allow users to create and share their own
+                portfolios.
+              </p>
+              <p>
+                The frontend was made with Next.js and it connected to a Java
+                backend.
+              </p>
+              <p className="technologiesUsed">
+                Technologies used: Next.js, TypeScript, Tailwind CSS, REST APIs.
+              </p>
+              <ProjectLink
+                text="You can find the repository at"
+                href="https://github.com/MarceloRobert/web-portfolio"
+              />
+            </div>
+          </article>
+        </section>
+        <section id="education">
+          <h2 className="portfolioHeading">Education</h2>
+          <h3 className="portfolioSubheading">
+            Bachelor&apos;s Degree in Computer Science
+          </h3>
+          <p>By Federal University of Itajubá - UNIFEI.</p>
+          <p>From 2020 to 2025, in Itajubá, Minas Gerais, Brazil.</p>
+          <p className="mt-4">
+            Some highlighted subjects: Software Engineering, Object Oriented
+            Programming, Algorithm Analysis and Design, Web Development, and
+            Distributed Systems.
+          </p>
+        </section>
+      </main>
+    </>
+  );
 }
 
-const ProjectLink = ({ text, href }: { text: string, href: string }) => {
-    return <div className="text-center indent-0 mt-4">
-        <p>{text}</p>
-        <Link href={href} target="_blank" rel="noopener noreferrer">
-            {href}
-        </Link>
+const ProjectLink = ({ text, href }: { text: string; href: string }) => {
+  return (
+    <div className="text-center indent-0 mt-4">
+      <p>{text}</p>
+      <Link href={href} target="_blank" rel="noopener noreferrer">
+        {href}
+      </Link>
     </div>
-}
+  );
+};

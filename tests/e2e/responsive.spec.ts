@@ -13,7 +13,9 @@ test.describe("mobile responsive layout", () => {
         viewportWidth: document.documentElement.clientWidth,
       }));
 
-      expect(dimensions.documentWidth).toBeLessThanOrEqual(dimensions.viewportWidth);
+      expect(dimensions.documentWidth).toBeLessThanOrEqual(
+        dimensions.viewportWidth,
+      );
     });
   }
 
