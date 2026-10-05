@@ -72,6 +72,12 @@ npm run format
 npm run format:check
 ```
 
+Git hooks run these checks automatically: the pre-commit hook formats and lints staged files, while the pre-push hook checks the full repository. This setup was implemented using Husky and lint-staged.
+
 VSCode users are recommended to install the ESLint and Prettier extensions for automatic linting and formatting.
 
 Generated Next.js output in `.next`, `.next-playwright`, `out`, and `build` is ignored by ESLint.
+
+### CI/CD
+
+This repository uses GitHub Actions for continuous integration and deployment. The workflows are defined in the `.github/workflows` folder. The main workflows run testing, linting and formatting.
