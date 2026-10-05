@@ -41,7 +41,9 @@
 
 .portfolioMain {
   background-color: color-mix(in oklab, var(--gridBackground) 90%, transparent);
-  box-shadow: 20px 0px 20px color-mix(in oklab, var(--gridBackground) 90%, transparent), -20px 0px 20px color-mix(in oklab, var(--gridBackground) 90%, transparent)
+  box-shadow:
+    20px 0px 20px color-mix(in oklab, var(--gridBackground) 90%, transparent),
+    -20px 0px 20px color-mix(in oklab, var(--gridBackground) 90%, transparent);
 }
 
 .portfolioParagraph {
