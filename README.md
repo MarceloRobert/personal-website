@@ -54,3 +54,24 @@ This repository uses Playwright for end-to-end testing to make sure the screen r
 npm run test:e2e
 # or equivalent commands for yarn, pnpm, or bun. Check package.json for the exact command.
 ```
+
+Playwright is currently using a separate folder from `.next` in order to avoid conflicts with the Next.js build process and therefore be able to run while the dev server is on. The test results will be stored in the `.next-playwright` folder (check [/playwright.config.ts](playwright.config.ts)).
+
+### Linting and Formatting
+
+Use ESLint to check the codebase:
+
+```bash
+npm run lint
+```
+
+Use Prettier to format the codebase, or check formatting without changing files:
+
+```bash
+npm run format
+npm run format:check
+```
+
+VSCode users are recommended to install the ESLint and Prettier extensions for automatic linting and formatting.
+
+Generated Next.js output in `.next`, `.next-playwright`, `out`, and `build` is ignored by ESLint.
