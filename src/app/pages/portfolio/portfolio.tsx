@@ -2,6 +2,7 @@
 
 import "./portfolio.css";
 import { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { GlassContainer } from "@/components/GlassContainer";
 import { LinkWithIcon } from "@/components/LinkWithIcon";
 import { SocialLinksPill } from "@/components/SocialLinksPill";
@@ -24,6 +25,8 @@ const SHOW_DEV_TAG = process.env.NEXT_PUBLIC_SHOW_DEV_TAG === "true";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Portfolio() {
+  const locale = useLocale();
+  const t = useTranslations("portfolio");
   const [state, setState] = useState(0);
   const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
   const [gridEnabled, setGridEnabled] = useState(true);
@@ -92,8 +95,22 @@ export default function Portfolio() {
           aria-pressed={gridEnabled}
           onClick={() => setGridEnabled((prev) => !prev)}
         >
-          {gridEnabled ? "Hide grid" : "Show grid"}
+          {gridEnabled ? t("gridHide") : t("gridShow")}
         </button>
+        <nav
+          className="fixed top-4 left-4 flex gap-2 text-sm"
+          aria-label={t("languageLabel")}
+        >
+          <Link href="/" aria-current={locale === "en" ? "page" : undefined}>
+            {t("languageEnglish")}
+          </Link>
+          <Link
+            href="/pt-br"
+            aria-current={locale === "pt-br" ? "page" : undefined}
+          >
+            {t("languagePortuguese")}
+          </Link>
+        </nav>
 
         <header className="self-center">
           <GlassContainer>
@@ -119,10 +136,7 @@ export default function Portfolio() {
         )}
 
         <div id="summary" className="text-lg self-center">
-          <p>
-            Hi! I&apos;m a Full-Stack developer with experience in frontend,
-            backend, and database. Check out the projects I have worked on!
-          </p>
+          <p>{t("introduction")}</p>
         </div>
 
         {SHOW_DEV_TAG && (
@@ -130,148 +144,100 @@ export default function Portfolio() {
         )}
 
         <section id="experience">
-          <h2 className="portfolioHeading">Experience</h2>
+          <h2 className="portfolioHeading">{t("experienceTitle")}</h2>
           <article>
-            <h3 className="portfolioSubheading">
-              ProFusion Mobi / KernelCI Dashboard
-            </h3>
+            <h3 className="portfolioSubheading">{t("kernelciTitle")}</h3>
             <div className="portfolioParagraph">
               <Image
                 className="bg-white rounded-2xl mx-auto my-4 p-4 w-62.5"
                 src={`${BASE_PATH}/images/portfolio/kernelci-logo-color.svg`}
                 width={250}
                 height={125}
-                alt="KernelCI Logo"
+                alt={t("kernelciLogoAlt")}
               />
 
               <p>
-                Within{" "}
-                <Link
-                  href={"https://profusion.mobi/"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  ProFusion mobi
-                </Link>
-                , I worked on the KernelCI Dashboard project. KernelCI is an{" "}
-                <strong>opensource</strong> project helping Linux Kernel
-                developers build and test their code, and they need a dashboard
-                to visualize all the results.
+                {t.rich("kernelciIntro", {
+                  profusion: (chunks) => (
+                    <ExtLink href="https://profusion.mobi/">{chunks}</ExtLink>
+                  ),
+                  strong: (chunks) => <strong>{chunks}</strong>,
+                })}
               </p>
-              <p>
-                I worked on the frontend, backend and database, as well as
-                CI/CD, unit and integration tests, email notifications, and
-                performance monitoring. I was also the development team leader
-                for a while.
-              </p>
-              <p>I contributed to:</p>
+              <p>{t("kernelciResponsibilities")}</p>
+              <p>{t("kernelciFeaturesIntro")}</p>
               <ul className="portfolioList">
                 <li>
-                  New pages and{" "}
-                  <a
-                    href="https://github.com/kernelci/dashboard/pulls?q=is%3Apr+state%3Aclosed+author%3AMarceloRobert+Feat+-label%3ABackend%2Cbug%2CCI%2FCD%2Cdependencies%2CIngester"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    multiple features
-                  </a>{" "}
-                  with React;
+                  {t.rich("kernelciFeaturesPages", {
+                    featuresLink: (chunks) => (
+                      <ExtLink href="https://github.com/kernelci/dashboard/pulls?q=is%3Apr+state%3Aclosed+author%3AMarceloRobert+Feat+-label%3ABackend%2Cbug%2CCI%2FCD%2Cdependencies%2CIngester">
+                        {chunks}
+                      </ExtLink>
+                    ),
+                  })}
                 </li>
                 <li>
-                  Query performance improvements of{" "}
-                  <a
-                    href="https://github.com/kernelci/dashboard/pull/1562"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    more than 10x
-                  </a>{" "}
-                  on some pages;
+                  {t.rich("kernelciFeaturesPerformance", {
+                    performanceLink: (chunks) => (
+                      <ExtLink href="https://github.com/kernelci/dashboard/pull/1562">
+                        {chunks}
+                      </ExtLink>
+                    ),
+                  })}
                 </li>
                 <li>
-                  <a
-                    href="https://github.com/kernelci/dashboard/pull/1777"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    CI/CD/CT
-                  </a>{" "}
-                  with GitHub Actions, increasing{" "}
-                  <a
-                    href="https://github.com/kernelci/dashboard/tree/main/backend#backend-"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    backend coverage
-                  </a>{" "}
-                  to 70%;
+                  {t.rich("kernelciFeaturesCicd", {
+                    cicdLink: (chunks) => (
+                      <ExtLink href="https://github.com/kernelci/dashboard/pull/1777">
+                        {chunks}
+                      </ExtLink>
+                    ),
+                    coverageLink: (chunks) => (
+                      <ExtLink href="https://github.com/kernelci/dashboard/tree/main/backend#backend-">
+                        {chunks}
+                      </ExtLink>
+                    ),
+                  })}
                 </li>
-                <li>
-                  Scrum and Kanban cerimonies and meetings with international
-                  clients.
-                </li>
+                <li>{t("kernelciCeremonies")}</li>
               </ul>
-              <p className="technologiesUsed">
-                Technologies used: React, TypeScript, Django, Python,
-                PostgreSQL, Docker, Git, GitHub Actions, CI/CD, Scrum, Kanban,
-                Cron jobs, Prometheus, Jinja.
-              </p>
+              <p className="technologiesUsed">{t("kernelciTechnologies")}</p>
               <ProjectLink
-                text="You can find KernelCI Dashboard's repository at"
+                text={t("kernelciRepository")}
                 href="https://github.com/kernelci/dashboard"
               />
             </div>
           </article>
         </section>
         <section id="projects">
-          <h2 className="portfolioHeading">Projects</h2>
+          <h2 className="portfolioHeading">{t("projectsTitle")}</h2>
           <article>
-            <h3 className="portfolioSubheading">This very website</h3>
+            <h3 className="portfolioSubheading">{t("websiteTitle")}</h3>
             <div className="portfolioParagraph">
-              <p>
-                I&apos;ve made everything in this website myself and with some
-                help from AI agents, from design to implementation and
-                deployment. This is a personal portfolio website built with
-                Next.js. It showcases my projects, experience, and skills as a
-                developer.
-              </p>
-              <p>Some cool features include: </p>
+              <p>{t("websiteDescription")}</p>
+              <p>{t("websiteFeaturesIntro")}</p>
               <ul className="portfolioList">
-                <li>Dynamic background with gradient effects;</li>
-                <li>Responsive design;</li>
-                <li>Semantic HTML.</li>
+                <li>{t("websiteFeaturesOne")}</li>
+                <li>{t("websiteFeaturesTwo")}</li>
+                <li>{t("websiteFeaturesThree")}</li>
+                <li>{t("websiteFeaturesFour")}</li>
               </ul>
-              <p className="technologiesUsed">
-                Technologies used: Next.js, TypeScript, Tailwind CSS, AI agents.
-              </p>
+              <p className="technologiesUsed">{t("websiteTechnologies")}</p>
               <ProjectLink
-                text="You can find this website's repository at"
+                text={t("websiteRepository")}
                 href="https://github.com/MarceloRobert/personal-website"
               />
             </div>
           </article>
           <hr className="w-1/2 mx-auto my-8" />
           <article>
-            <h3 className="portfolioSubheading">
-              Hidroponic Garden Monitoring System
-            </h3>
+            <h3 className="portfolioSubheading">{t("hydroponicTitle")}</h3>
             <div className="portfolioParagraph">
-              <p>
-                In university, I learned about distributed systems and one of
-                the topics was multiple microcontrollers installed in an
-                hidroponic garden for environment control. I made the frontend
-                in Dart, connecting to a backend in Java, that received data
-                from a microcontroller in C++.
-              </p>
-              <p>
-                The frontend was made with Flutter and we used an ActiveMQ AWS
-                broker as the medium between all components.
-              </p>
-              <p className="technologiesUsed">
-                Technologies used: Flutter, Dart, ActiveMQ, AWS.
-              </p>
+              <p>{t("hydroponicDescription")}</p>
+              <p>{t("hydroponicDetails")}</p>
+              <p className="technologiesUsed">{t("hydroponicTechnologies")}</p>
               <ProjectLink
-                text="You can find the frontend's repository at"
+                text={t("hydroponicRepository")}
                 href="https://github.com/MarceloRobert/hidroponic_app"
               />
             </div>
@@ -279,54 +245,50 @@ export default function Portfolio() {
           <hr className="w-1/2 mx-auto my-8" />
           <article>
             <h3 className="portfolioSubheading">
-              Website to create and share portfolios
+              {t("portfolioPlatformTitle")}
             </h3>
             <div className="portfolioParagraph">
-              <p>
-                With a colleague, I made the frontend of a web platform having
-                CRUD (Create, Read, Update, Delete) functionality of projects
-                and users. This would allow users to create and share their own
-                portfolios.
-              </p>
-              <p>
-                The frontend was made with Next.js and it connected to a Java
-                backend.
-              </p>
+              <p>{t("portfolioPlatformDescription")}</p>
+              <p>{t("portfolioPlatformDetails")}</p>
               <p className="technologiesUsed">
-                Technologies used: Next.js, TypeScript, Tailwind CSS, REST APIs.
+                {t("portfolioPlatformTechnologies")}
               </p>
               <ProjectLink
-                text="You can find the repository at"
+                text={t("portfolioPlatformRepository")}
                 href="https://github.com/MarceloRobert/web-portfolio"
               />
             </div>
           </article>
         </section>
         <section id="education">
-          <h2 className="portfolioHeading">Education</h2>
-          <h3 className="portfolioSubheading">
-            Bachelor&apos;s Degree in Computer Science
-          </h3>
-          <p>By Federal University of Itajubá - UNIFEI.</p>
-          <p>From 2020 to 2025, in Itajubá, Minas Gerais, Brazil.</p>
-          <p className="mt-4">
-            Some highlighted subjects: Software Engineering, Object Oriented
-            Programming, Algorithm Analysis and Design, Web Development, and
-            Distributed Systems.
-          </p>
+          <h2 className="portfolioHeading">{t("educationTitle")}</h2>
+          <h3 className="portfolioSubheading">{t("educationDegree")}</h3>
+          <p>{t("educationInstitution")}</p>
+          <p>{t("educationPeriod")}</p>
+          <p className="mt-4">{t("educationSubjects")}</p>
         </section>
       </main>
     </>
   );
 }
 
+const ExtLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
+  <a href={href} target="_blank" rel="noopener noreferrer">
+    {children}
+  </a>
+);
+
 const ProjectLink = ({ text, href }: { text: string; href: string }) => {
   return (
     <div className="text-center indent-0 mt-4">
       <p>{text}</p>
-      <Link href={href} target="_blank" rel="noopener noreferrer">
-        {href}
-      </Link>
+      <ExtLink href={href}>{href}</ExtLink>
     </div>
   );
 };
