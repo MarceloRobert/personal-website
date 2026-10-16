@@ -20,6 +20,20 @@ The `public` folder contains **static assets** such as images and fonts.
 
 **CSS files** are placed alongside the page or component they style, following the convention of co-locating styles with their respective components.
 
+### Internationalization
+
+Internationalization is handled with [next-intl](https://next-intl.dev/). The site currently supports English and Brazilian Portuguese. English is served at the base route (`/`), while Brazilian Portuguese is served at `/pt-br`.
+
+The site is exported as static files and deployed to GitHub Pages, so it does not use a proxy for locale detection or routing. Language selection uses the explicit static routes instead. The translation messages are stored in `messages/en.json` and `messages/pt-br.json`.
+
+When adding new internationalization messages, write all message keys without nesting. Flat keys make them easier to read, search for, and maintain later. For example:
+
+```json
+{
+  "portfolioExperienceTitle": "Experience"
+}
+```
+
 ## Development
 
 ### Getting Started
