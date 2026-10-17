@@ -2,13 +2,13 @@
 
 import "./portfolio.css";
 import { useEffect, useMemo, useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { GlassContainer } from "@/components/GlassContainer";
 import { LinkWithIcon } from "@/components/LinkWithIcon";
 import { SocialLinksPill } from "@/components/SocialLinksPill";
 import Image from "next/image";
-import Link from "next/link";
 import { ICONS } from "@/constants/icons";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
@@ -25,7 +25,6 @@ const SHOW_DEV_TAG = process.env.NEXT_PUBLIC_SHOW_DEV_TAG === "true";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Portfolio() {
-  const locale = useLocale();
   const t = useTranslations("portfolio");
   const [state, setState] = useState(0);
   const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
@@ -89,28 +88,20 @@ export default function Portfolio() {
       )}
       <SocialLinksPill />
       <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 py-16">
-        <button
-          id="toggleGridButton"
-          className="fixed top-4 right-4 dark:bg-white dark:text-black bg-black text-white text-lg transition-all py-2 px-4 rounded-full"
-          aria-pressed={gridEnabled}
-          onClick={() => setGridEnabled((prev) => !prev)}
+        <div
+          id="controlButtons"
+          className="flex fixed top-4 right-4 gap-4 z-20"
         >
-          {gridEnabled ? t("gridHide") : t("gridShow")}
-        </button>
-        <nav
-          className="fixed top-4 left-4 flex gap-2 text-sm"
-          aria-label={t("languageLabel")}
-        >
-          <Link href="/" aria-current={locale === "en" ? "page" : undefined}>
-            {t("languageEnglish")}
-          </Link>
-          <Link
-            href="/pt-br"
-            aria-current={locale === "pt-br" ? "page" : undefined}
+          <LanguageSelector />
+          <button
+            id="toggleGridButton"
+            className=" dark:bg-white dark:text-black bg-black text-white text-lg transition-all py-2 px-4 rounded-full"
+            aria-pressed={gridEnabled}
+            onClick={() => setGridEnabled((prev) => !prev)}
           >
-            {t("languagePortuguese")}
-          </Link>
-        </nav>
+            {gridEnabled ? t("gridHide") : t("gridShow")}
+          </button>
+        </div>
 
         <header className="self-center">
           <GlassContainer>

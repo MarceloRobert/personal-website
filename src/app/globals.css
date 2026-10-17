@@ -12,6 +12,8 @@
   --color-base-gray: #1a1a1a;
   --color-light-gray: #dddddd;
   --color-dark-gray: #000c25;
+  --color-on-base-gray: #333333;
+  --color-on-light-gray: #eeeeee;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
