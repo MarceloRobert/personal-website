@@ -48,3 +48,51 @@ test.describe("mobile responsive layout", () => {
     await expect(socialLinksPill).toBeHidden();
   });
 });
+
+test.describe("theme toggle", () => {
+  test("switches and restores the selected theme", async ({ page }) => {
+    await page.goto("/");
+
+    const controlsToggle = page.locator("#toggleControlButton");
+    const controlButtonsDiv = page.locator("#controlButtons");
+    const themeToggle = page.locator("#toggleThemeButton");
+
+    // Initial state: only control toggle visible, but theme toggle hidden
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await expect(controlsToggle).toBeVisible();
+    await expect(controlButtonsDiv).toBeHidden();
+    await expect(themeToggle).toHaveAttribute("aria-pressed", "false");
+
+    // Toggle controls
+    await controlsToggle.click();
+    await expect(controlsToggle).toHaveAttribute("aria-expanded", "true");
+    await expect(controlButtonsDiv).toBeVisible();
+    // expect 2 icons and no text
+    await expect(themeToggle.locator("span")).toHaveCount(2);
+    await expect(themeToggle).not.toContainText("theme");
+    // Toggle theme
+    await themeToggle.click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await expect(themeToggle).toHaveAttribute("aria-pressed", "true");
+
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await expect(themeToggle).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("switches theme on desktop", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+
+    // Theme button is directly accessible, and the config button is hidden
+    const controlsToggle = page.locator("#toggleControlButton");
+    const themeToggle = page.locator("#toggleThemeButton");
+    await expect(themeToggle).toBeVisible();
+    await expect(themeToggle).toHaveAttribute("aria-pressed", "false");
+    await expect(controlsToggle).toBeHidden();
+
+    await themeToggle.click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await expect(themeToggle).toHaveAttribute("aria-pressed", "true");
+  });
+});

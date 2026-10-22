@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import type { ComponentProps, ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "@/app/globals.css";
+import { Footer } from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,11 +29,13 @@ export function RootLayout({ children, locale, messages }: RootLayoutProps) {
   return (
     <html
       lang={locale}
+      data-theme="dark"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
