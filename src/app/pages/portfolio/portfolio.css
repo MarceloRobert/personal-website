@@ -3,11 +3,9 @@
   --gridForeground: var(--color-dark-gray);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --gridBackground: var(--color-base-gray);
-    --gridForeground: var(--color-light-gray);
-  }
+[data-theme="dark"] {
+  --gridBackground: var(--color-base-gray);
+  --gridForeground: var(--color-light-gray);
 }
 
 .gridCell {

@@ -34,6 +34,10 @@ When adding new internationalization messages, write all message keys without ne
 }
 ```
 
+### Manual Theme Change
+
+The theme is toggled manually via data-theme attribute, with TailwindCSS classes and vanilla CSS themes controlling the colors. The toggle switches between light and dark themes (dark as default), and the selected theme is saved in the browser's **local storage** so it is restored on subsequent visits.
+
 ## Development
 
 ### Getting Started
