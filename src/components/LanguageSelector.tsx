@@ -1,13 +1,14 @@
-import { useLocale, useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
+import type { Locale } from "@/i18n/locales";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-export const LanguageSelector = () => {
-  const locale = useLocale();
-  const t = useTranslations("portfolio");
+// Passing the locale as a prop is technically prop drilling, but the usual locale detection methods don't work with the page router, so we have to pass it down from the page component.
+export const LanguageSelector = async ({ locale }: { locale: Locale }) => {
+  const t = await getTranslations({ locale, namespace: "portfolio" });
 
   return (
     <details className="relative">
