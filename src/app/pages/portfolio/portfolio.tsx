@@ -1,7 +1,7 @@
 "use client";
 
 import "./portfolio.css";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { GlassContainer } from "@/components/GlassContainer";
 import { LinkWithIcon } from "@/components/LinkWithIcon";
@@ -11,6 +11,7 @@ import { ICONS } from "@/constants/icons";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { twMerge } from "tailwind-merge";
+import { BackgroundGrid } from "@/components/BackgroundGrid";
 
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
@@ -19,76 +20,18 @@ import { twMerge } from "tailwind-merge";
 // But exactly because this is a specific css file, there's not much worry about scoping.
 // So the easier use wins.
 
-const SQUARE_WIDTH = 35;
-const LTD_RANDOM_NUMS_LEN = 1000;
-const UINT16_LIMIT = 65536;
-const ANIMATION_OFFSET = 300; // in seconds, should be more than the animation duration in the css
 const SHOW_DEV_TAG = process.env.NEXT_PUBLIC_SHOW_DEV_TAG === "true";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Portfolio() {
   const t = useTranslations("portfolio");
   const [state, setState] = useState(0);
-  const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
   const [gridEnabled, setGridEnabled] = useState(true);
   const [controlsOpen, setControlsOpen] = useState(false);
-  // Array of random values that will be generated once and never changed again so to maintain purity
-  const [limitedRandomNums] = useState(() =>
-    Uint16Array.from({ length: LTD_RANDOM_NUMS_LEN }, () =>
-      Math.floor(Math.random() * UINT16_LIMIT),
-    ),
-  );
-
-  useEffect(() => {
-    const updateGridSize = () => {
-      setGridCount({
-        columns: Math.ceil(window.innerWidth / SQUARE_WIDTH),
-        rows: Math.ceil(window.innerHeight / SQUARE_WIDTH),
-      });
-    };
-
-    updateGridSize();
-    window.addEventListener("resize", updateGridSize);
-
-    return () => window.removeEventListener("resize", updateGridSize);
-    // returning a function definition means that the useEffect will run it as a CLEANUP function
-    // the cleanup happens whenever the useEffect is re-run, or when the component is unmounted
-    // Since this useEffect has no dependencies, it will only run once on mount,
-    // and the cleanup will run on unmount
-  }, []);
-
-  const gridSquares = useMemo(() => {
-    const squares = Array.from({ length: gridCount.columns * gridCount.rows });
-    return squares.map((_, index) => (
-      <div
-        key={index}
-        className="gridCell aspect-square"
-        style={{
-          animationDelay: `${-(limitedRandomNums[index % LTD_RANDOM_NUMS_LEN] / UINT16_LIMIT) * ANIMATION_OFFSET}s`,
-        }}
-      />
-    ));
-  }, [gridCount, limitedRandomNums]);
 
   return (
     <>
-      {gridEnabled && (
-        <section
-          id="background"
-          className="fixed h-screen w-screen"
-          aria-hidden="true"
-        >
-          <div
-            id="gridContainer"
-            className="grid overflow-hidden gap-px h-full w-full"
-            style={{
-              gridTemplateColumns: `repeat(${gridCount.columns}, minmax(0, 1fr))`,
-            }}
-          >
-            {gridSquares}
-          </div>
-        </section>
-      )}
+      {gridEnabled && <BackgroundGrid />}
       <SocialLinksPill />
       <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 pt-16 pb-24">
         <div className="fixed top-4 right-4 z-20 flex flex-col items-end gap-2">

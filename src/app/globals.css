@@ -4,7 +4,9 @@
 
 :root {
   --background: #ffffff;
+  --secondBackground: #dddddd;
   --foreground: #171717;
+  --secondForeground: #000c25;
   --link-color: #1a0dab;
 }
 
