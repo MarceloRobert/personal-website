@@ -1,13 +1,25 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useGrid } from "@/components/GridContext";
 
 const SQUARE_WIDTH = 35;
 const LTD_RANDOM_NUMS_LEN = 1000;
 const UINT16_LIMIT = 65536;
 const ANIMATION_OFFSET = 300; // in seconds, should be more than the animation duration in the css
 
-export function BackgroundGrid() {
+export const BackgroundGrid = () => {
+  const { gridEnabled } = useGrid();
+
+  if (!gridEnabled) {
+    return null;
+  }
+
+  return <Grid />;
+};
+
+// Separate component just so we can do an early return if the grid is disabled, and not have to deal with setting up the states and effects.
+function Grid() {
   const [gridCount, setGridCount] = useState({ columns: 0, rows: 0 });
   const [limitedRandomNums] = useState(() =>
     Uint16Array.from({ length: LTD_RANDOM_NUMS_LEN }, () =>

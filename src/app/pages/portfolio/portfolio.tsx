@@ -1,7 +1,4 @@
-"use client";
-
 import "./portfolio.css";
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { GlassContainer } from "@/components/GlassContainer";
 import { LinkWithIcon } from "@/components/LinkWithIcon";
@@ -13,6 +10,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { BackgroundGrid } from "@/components/BackgroundGrid";
 import { StateDebug } from "@/components/StateDebug";
 import { PageControls } from "@/components/SettingsControl";
+import { GridProvider } from "@/components/GridContext";
+import { GridToggle } from "@/components/GridToggle";
 
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
@@ -26,22 +25,14 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Portfolio() {
   const t = useTranslations("portfolio");
-  const [gridEnabled, setGridEnabled] = useState(true);
 
   return (
-    <>
-      {gridEnabled && <BackgroundGrid />}
+    <GridProvider>
+      <BackgroundGrid />
       <SocialLinksPill />
       <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 pt-16 pb-24">
         <PageControls>
-          <button
-            id="toggleGridButton"
-            className="dark:bg-white dark:text-black bg-black px-4 py-2 text-lg text-white transition-all rounded-full"
-            aria-pressed={gridEnabled}
-            onClick={() => setGridEnabled((prev) => !prev)}
-          >
-            {gridEnabled ? t("gridHide") : t("gridShow")}
-          </button>
+          <GridToggle />
           <ThemeToggle />
           <LanguageSelector />
         </PageControls>
@@ -194,7 +185,7 @@ export default function Portfolio() {
           <p className="mt-4">{t("educationSubjects")}</p>
         </section>
       </main>
-    </>
+    </GridProvider>
   );
 }
 
