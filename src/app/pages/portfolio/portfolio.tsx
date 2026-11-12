@@ -1,5 +1,6 @@
 import "./portfolio.css";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/locales";
 import { GlassContainer } from "@/components/GlassContainer";
 import { LinkWithIcon } from "@/components/LinkWithIcon";
 import { SocialLinksPill } from "@/components/SocialLinksPill";
@@ -23,8 +24,9 @@ import { GridToggle } from "@/components/GridToggle";
 const SHOW_DEV_TAG = process.env.NEXT_PUBLIC_SHOW_DEV_TAG === "true";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-export default function Portfolio() {
-  const t = useTranslations("portfolio");
+export default async function Portfolio({ locale }: { locale: Locale }) {
+  // using getTranslations instead of useTranslations because this is a server component
+  const t = await getTranslations({ locale, namespace: "portfolio" });
 
   return (
     <GridProvider>
@@ -34,7 +36,7 @@ export default function Portfolio() {
         <PageControls>
           <GridToggle />
           <ThemeToggle />
-          <LanguageSelector />
+          <LanguageSelector locale={locale} />
         </PageControls>
         <header className="self-center">
           <GlassContainer>
