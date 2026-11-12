@@ -12,6 +12,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { twMerge } from "tailwind-merge";
 import { BackgroundGrid } from "@/components/BackgroundGrid";
+import { StateDebug } from "@/components/StateDebug";
 
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
@@ -25,7 +26,6 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function Portfolio() {
   const t = useTranslations("portfolio");
-  const [state, setState] = useState(0);
   const [gridEnabled, setGridEnabled] = useState(true);
   const [controlsOpen, setControlsOpen] = useState(false);
 
@@ -92,14 +92,7 @@ export default function Portfolio() {
           </nav>
         </header>
 
-        {SHOW_DEV_TAG && (
-          <div>
-            <span>{state} </span>
-            <button onClick={() => setState((prev) => prev + 1)}>
-              Change state
-            </button>
-          </div>
-        )}
+        {SHOW_DEV_TAG && <StateDebug />}
 
         <div id="summary" className="text-lg self-center">
           <p>{t("introduction")}</p>
