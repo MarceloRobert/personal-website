@@ -10,9 +10,9 @@ import Image from "next/image";
 import { ICONS } from "@/constants/icons";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { twMerge } from "tailwind-merge";
 import { BackgroundGrid } from "@/components/BackgroundGrid";
 import { StateDebug } from "@/components/StateDebug";
+import { PageControls } from "@/components/SettingsControl";
 
 // the css is specific to this page, so we can make a specific css file for it.
 // It could be imported as a module (as in portfolio.module.css), which helps with scoping,
@@ -27,57 +27,24 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export default function Portfolio() {
   const t = useTranslations("portfolio");
   const [gridEnabled, setGridEnabled] = useState(true);
-  const [controlsOpen, setControlsOpen] = useState(false);
 
   return (
     <>
       {gridEnabled && <BackgroundGrid />}
       <SocialLinksPill />
       <main className="portfolioMain min-h-screen min-w-0 w-full flex flex-col self-center z-10 font-mono text-center sm:max-w-9/10 lg:max-w-5/10 md:max-w-7/10 px-8 sm:px-16 pt-16 pb-24">
-        <div className="fixed top-4 right-4 z-20 flex flex-col items-end gap-2">
+        <PageControls>
           <button
-            id="toggleControlButton"
-            type="button"
-            className={twMerge(
-              "flex size-12 items-center justify-center rounded-full border bg-light-gray transition-all hover:bg-on-light-gray sm:hidden dark:bg-base-gray dark:hover:bg-on-base-gray",
-              controlsOpen && "rotate-30",
-            )}
-            aria-controls="controlButtons"
-            aria-expanded={controlsOpen}
-            aria-label={
-              controlsOpen ? t("controlMenuClose") : t("controlMenuOpen")
-            }
-            onClick={() => setControlsOpen((prev) => !prev)}
+            id="toggleGridButton"
+            className="dark:bg-white dark:text-black bg-black px-4 py-2 text-lg text-white transition-all rounded-full"
+            aria-pressed={gridEnabled}
+            onClick={() => setGridEnabled((prev) => !prev)}
           >
-            <Image
-              className="size-7 dark:invert"
-              src={`${BASE_PATH}/icons/settings-gear-part-2-svgrepo-com.svg`}
-              alt="settings icon"
-              width="28"
-              height="28"
-            />
+            {gridEnabled ? t("gridHide") : t("gridShow")}
           </button>
-          <div
-            id="controlButtons"
-            className={
-              controlsOpen
-                ? "flex flex-col items-end gap-2 sm:flex-row sm:items-center sm:gap-4"
-                : "hidden sm:flex sm:items-center sm:gap-4"
-            }
-          >
-            <button
-              id="toggleGridButton"
-              className="dark:bg-white dark:text-black bg-black px-4 py-2 text-lg text-white transition-all rounded-full"
-              aria-pressed={gridEnabled}
-              onClick={() => setGridEnabled((prev) => !prev)}
-            >
-              {gridEnabled ? t("gridHide") : t("gridShow")}
-            </button>
-            <ThemeToggle />
-            <LanguageSelector />
-          </div>
-        </div>
-
+          <ThemeToggle />
+          <LanguageSelector />
+        </PageControls>
         <header className="self-center">
           <GlassContainer>
             <h1 className="text-5xl">Marcelo Robert Santos</h1>
